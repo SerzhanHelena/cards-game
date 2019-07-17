@@ -12,7 +12,25 @@ const defaultCardArray6x6 = [
     "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
     "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
     "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
+];
 
+const defaultCardArray8x8 = [
+    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
+    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
+    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
+    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
+    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
+    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
+    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
+    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
+    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
+    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
+    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
+    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
+    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
+    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
+    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
+    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png"
 ];
 let mixedCardArray = [];
 let flippedCards = 0;
@@ -20,14 +38,15 @@ let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 
+
 const getRadioValue = () => {
-    const radio = document.getElementsByName("difficulty");
+    const radioBtns = document.getElementsByName("difficulty");
     let result;
-     for (let i = 0; i < radio.length; i++) {
-         if (radio[i].checked) {
-             result = radio[i].value;
+    radioBtns.forEach(radio => {
+        if (radio.checked) {
+            result = radio.value;
         }
-     }
+    });
      return parseInt(result);
  };
 
@@ -101,43 +120,46 @@ const removeFlipCards = () => {
     secondCard.style.cssText = "visibility:hidden;opacity:0;transition:visibility 0s 2s,opacity 2s linear;";
 };
 
-const newBoard = () => {
+const createBoard = () => {
     mixedCardArray = [];
     if (getRadioValue() === 6) {
         mixedCardArray = shuffleCards(defaultCardArray6x6);
     } else if (getRadioValue() === 4) {
         mixedCardArray = shuffleCards(defaultCardArray);
+    } else {
+        mixedCardArray = shuffleCards(defaultCardArray8x8)
     }
 
-    flippedCards = 0;
+    if(document.getElementById('main_container')) {
+        document.getElementById('main_container').remove();
+    }
+
+
     const container = document.createElement("div");
+    container.setAttribute('id', 'main_container');
+
+
     if (getRadioValue() === 6) {
-        container.setAttribute("class", "big");
-
+        container.classList.add("big");
     } else if (getRadioValue() === 4) {
-        container.setAttribute("class", "small");
-
+        container.classList.add("small");
     } else if (getRadioValue() === 8) {
-    container.setAttribute("class", "large");
-
+    container.classList.add("large");
 }
-    for (let i = 0; i < mixedCardArray.length; i++) {
-
+    mixedCardArray.forEach(cardItem => {
         const card = document.createElement("div");
 
-        card.setAttribute("class", "card");
-
-        card.id = "card" + i;
-        card.value = mixedCardArray[i];
-        // console.log(card.value)
+        card.classList.add("card");
+        card.id = "card" + cardItem;
+        card.value = cardItem;
         container.appendChild(card);
 
         const backFace = document.createElement("img");
-        backFace.setAttribute('class', 'back-face');
+        backFace.classList.add('back-face');
 
         const frontFace = document.createElement("img");
-        frontFace.setAttribute('src', mixedCardArray[i]);
-        frontFace.setAttribute('class', 'front-face');
+        frontFace.setAttribute('src', cardItem);
+        frontFace.classList.add('front-face');
 
         card.appendChild(backFace);
         card.appendChild(frontFace);
@@ -146,10 +168,39 @@ const newBoard = () => {
 
         card.addEventListener('click', flipCard);
 
+    });
+};
 
-    }
+
+const changeBoard = () => {
+console.log(1)
+};
+
+
+const changeDifficulty = () => {
+    const radioButtons = document.getElementsByName('difficulty');
+    radioButtons.forEach(radioButton => {
+
+        radioButton.addEventListener('change', function (e) {
+            if(parseInt(e.currentTarget.value) === 6) {
+                e.currentTarget.checked = true;
+                createBoard();
+            }
+            else if(parseInt(e.currentTarget.value) === 8) {
+                e.currentTarget.checked = true;
+                createBoard();
+            } else {
+                e.currentTarget.checked = true;
+                createBoard();
+            }
+        });
+    });
 
 };
 
-newBoard();
+
+createBoard();
+changeDifficulty();
+
+
 

@@ -8,8 +8,8 @@
 }
 
 #board_container {
-    height: 100vh;
-    width: 60vw;
+    /*height: 100vh;*/
+    /*width: 60vw;*/
     margin: 0 auto;
 }
 
@@ -43,6 +43,7 @@ div#memory_board {
 }
 
 .large {
+    display: grid;
     grid-template-columns: repeat(8,1fr);
     grid-template-rows: repeat(8,1fr);
 }
