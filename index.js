@@ -41,15 +41,16 @@ let firstCard, secondCard;
 
 
 const logOut = () => {
-    const user = JSON.parse(localStorage.getItem("User"));
-    if(JSON.parse(localStorage.getItem("Users")=== null)) {
-        const users = [];
-        users.push(user);
-        localStorage.setItem('Users', JSON.stringify(users));
+    const keyUsers = "Users";
+    const keyUser = 'User';
+    const user = JSON.parse(localStorage.getItem(keyUser));
+    if(JSON.parse(localStorage.getItem(keyUsers)=== null)) {
+        const users = [user];
+        localStorage.setItem(keyUsers, JSON.stringify(users));
     } else {
-        const users = JSON.parse(localStorage.getItem("Users"));
+        const users = JSON.parse(localStorage.getItem(keyUsers));
         users.push(user);
-        localStorage.setItem("Users", JSON.stringify(users));
+        localStorage.setItem(keyUsers, JSON.stringify(users));
     }
     window.location = './form/form.html';
 };
