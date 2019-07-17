@@ -51,7 +51,7 @@ const logOut = () => {
         users.push(user);
         localStorage.setItem("Users", JSON.stringify(users));
     }
-    window.location = './form.html';
+    window.location = './form/form.html';
 };
 
 const logOutBtn = document.getElementById('log-out');
@@ -119,6 +119,7 @@ const flipCard = (e) =>  {
         flippedCards += 2;
         if(flippedCards === mixedCardArray.length) {
           const container = document.getElementById('main_container');
+          container.innerHTML = '';
             const div = document.createElement('div');
             div.innerHTML = 'Congratulations!!! Your score is ';
             container.appendChild(div);
