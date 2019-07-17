@@ -6,25 +6,17 @@
     <link rel="stylesheet" href="form.css">
 </head>
 <body>
-<h2>Login Form</h2>
-<form id="login-form" action="./index.html">
-    <fieldset>
-        <legend>
-            User Details
-        </legend>
-        <div>
-            <label for="username">Username</label>
-            <input id="username" type="text" name="username" placeholder="username" required/>
-        </div>
-        <div>
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password" placeholder="password" required />
-        </div>
-    </fieldset>
-    <button id="submit-btn" type="submit" value="Submit">Submit</button>
+<div class="login">
+    <div class="login-triangle"></div>
 
-    <output name="result"></output>
-</form>
+    <h2 class="login-header">Login</h2>
+
+    <form class="login-container" action="index.html">
+        <p><input id="username" type="email" name="username" placeholder="Email" required></p>
+        <p><input id="password" type="password" name="password" placeholder="Password" required></p>
+        <p><input id="submit-btn" type="submit" value="Login"></p>
+    </form>
+</div>
 <script src="form.js"></script>
 </body>
 </html>

@@ -38,21 +38,12 @@ let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 
-
-// const getUsers = () => {
-//     let users = [];
-//     const user = JSON.parse(localStorage.getItem("User"));
-//     console.log(user);
-//     users.push(user);
-//     console.log(users.length);
-// };
-// getUsers();
+let users = [];
 
 const logOut = () => {
-    let users = [];
     const user = JSON.parse(localStorage.getItem("User"));
-    console.log(user);
     users.push(user);
+    localStorage.setItem("Users", JSON.stringify(users));
     console.log(users.length);
     window.location = './form.html';
 };
@@ -95,6 +86,7 @@ const flipCard = (e) =>  {
     secondCard = card;
     hasFlippedCard = false;
     checkForMatch();
+
 };
 
 // let second = 0, minute = 0;

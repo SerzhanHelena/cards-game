@@ -4,25 +4,24 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="index.css">
-
 </head>
 <body>
-<main>
-    <section>
-        <h1>Hello, player!!!</h1>
+<header>
+    <div>
         <p>Please, choose difficulty</p>
         <input type="radio" id="size4" name="difficulty" value="4" checked>4x4
         <input type="radio" id="size6" name="difficulty" value="6">6x6
         <input type="radio" id="size8" name="difficulty" value="8">8x8
-
-        <div class="timer"></div>
-        <button id="log-out">Log out</button>
-    </section>
-
-<section id="board_container">
-    <div id="memory_board">
     </div>
-</section>
+    <div class="timer"></div>
+    <div>
+        <button id="log-out">Logout</button>
+    </div>
+</header>
+<main>
+    <section id="board_container">
+        <div id="memory_board"></div>
+    </section>
 </main>
 <script src="index.js"></script>
 </body>

@@ -1,7 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
 * {
     margin: 0;
     padding: 0;
 }
+
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 
 .card.flip {
     transform: rotateY(180deg);
@@ -19,7 +26,7 @@ div#memory_board {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     padding: 24px;
     height: 80%;
-    width: 70%;
+    width: max-content;
     margin: 20px auto;
 }
 
@@ -77,4 +84,32 @@ div#memory_board {
 
 .front-face {
     transform: rotateY(180deg);
+}
+
+header {
+    background: #ebebeb;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    justify-items: center;
+    align-items: center;
+    height: 100px;
+}
+
+#log-out {
+    background: #28d;
+    border-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    width: 105px;
+    height: 44px;
+    font-size: 18px;
+}
+
+#log-out:hover {
+    background: #17c;
+}
+
+/* Buttons' focus effect */
+#log-out:focus {
+    border-color: #05a;
 }
