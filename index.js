@@ -39,6 +39,28 @@ let lockBoard = false;
 let firstCard, secondCard;
 
 
+// const getUsers = () => {
+//     let users = [];
+//     const user = JSON.parse(localStorage.getItem("User"));
+//     console.log(user);
+//     users.push(user);
+//     console.log(users.length);
+// };
+// getUsers();
+
+const logOut = () => {
+    let users = [];
+    const user = JSON.parse(localStorage.getItem("User"));
+    console.log(user);
+    users.push(user);
+    console.log(users.length);
+    window.location = './form.html';
+};
+
+const logOutBtn = document.getElementById('log-out');
+logOutBtn.addEventListener('click', logOut);
+
+
 const getRadioValue = () => {
     const radioBtns = document.getElementsByName("difficulty");
     let result;
@@ -169,11 +191,6 @@ const createBoard = () => {
         card.addEventListener('click', flipCard);
 
     });
-};
-
-
-const changeBoard = () => {
-console.log(1)
 };
 
 

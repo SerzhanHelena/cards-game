@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+<h2>Login Form</h2>
+<form id="login-form" action="./index.html">
+    <fieldset>
+        <legend>
+            User Details
+        </legend>
+        <div>
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="username" required/>
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="password" required />
+        </div>
+    </fieldset>
+    <button id="submit-btn" type="submit" value="Submit">Submit</button>
+
+    <output name="result"></output>
+</form>
+<script src="form.js"></script>
+</body>
+</html>
