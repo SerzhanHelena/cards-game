@@ -38,13 +38,19 @@ let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 
-let users = [];
+
 
 const logOut = () => {
     const user = JSON.parse(localStorage.getItem("User"));
-    users.push(user);
-    localStorage.setItem("Users", JSON.stringify(users));
-    console.log(users.length);
+    if(JSON.parse(localStorage.getItem("Users")=== null)) {
+        const users = [];
+        users.push(user);
+        localStorage.setItem('Users', JSON.stringify(users));
+    } else {
+        const users = JSON.parse(localStorage.getItem("Users"));
+        users.push(user);
+        localStorage.setItem("Users", JSON.stringify(users));
+    }
     window.location = './form.html';
 };
 
@@ -110,6 +116,13 @@ const flipCard = (e) =>  {
  const checkForMatch = () => {
     if (firstCard.value === secondCard.value) {
         removeFlipCards();
+        flippedCards += 2;
+        if(flippedCards === mixedCardArray.length) {
+          const container = document.getElementById('main_container');
+            const div = document.createElement('div');
+            div.innerHTML = 'Congratulations!!! Your score is ';
+            container.appendChild(div);
+        }
     }
     unFlippedCards();
 };
