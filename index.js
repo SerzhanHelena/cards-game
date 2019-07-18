@@ -37,24 +37,65 @@ let flippedCards = 0;
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
-
-
+let score = 0;
+let records = [];
+const keyUsers = "Users";
+const keyUser = 'User';
+const timer = document.getElementById('timer');
+const scoreContainer =  document.getElementById('score');
+let time = 0;
+let seconds = 0;
+let minutes = 0;
 
 const logOut = () => {
-    const keyUsers = "Users";
-    const keyUser = 'User';
+
+
+    window.location = './form/form.html';
+};
+
+
+const addRecordTable = () => {
     const user = JSON.parse(localStorage.getItem(keyUser));
+    //const recordsTable = document.createElement("table");
+
     if(JSON.parse(localStorage.getItem(keyUsers)=== null)) {
-        const users = [user];
-        localStorage.setItem(keyUsers, JSON.stringify(users));
+        let users = [user];
+       localStorage.setItem(keyUsers, JSON.stringify(users));
     } else {
         const users = JSON.parse(localStorage.getItem(keyUsers));
         users.push(user);
         localStorage.setItem(keyUsers, JSON.stringify(users));
     }
-    window.location = './form/form.html';
-};
+    const users = JSON.parse(localStorage.getItem(keyUsers));
+    if(users.length) {
+       users.sort((a,b) => {
+            return b.score - a.score;
+        })
+    }
 
+    let table = document.createElement('table');
+    let tr = document.createElement('tr');
+    table.appendChild(tr);
+    tr.appendChild(document.createElement('th'));
+    tr.appendChild(document.createElement('th'));
+    table.rows[0].cells[0].innerHTML = 'Username';
+    table.rows[0].cells[1].innerHTML = 'Score';
+
+    document.body.appendChild(table);
+    let i = 1;
+
+    users.forEach(elem => {
+        let tr = document.createElement('tr');
+        table.appendChild(tr);
+        tr.appendChild(document.createElement('td'));
+        tr.appendChild(document.createElement('td'));
+        table.rows[i].cells[0].textContent = elem.userName;
+        table.rows[i].cells[1].innerHTML = elem.score;
+        i++;
+    });
+
+
+};
 const logOutBtn = document.getElementById('log-out');
 logOutBtn.addEventListener('click', logOut);
 
@@ -82,6 +123,7 @@ const shuffleCards = (cards) => {
 
 const flipCard = (e) =>  {
     if (lockBoard) return;
+
     const card = e.currentTarget;
     card.classList.add('flip');
 
@@ -93,40 +135,54 @@ const flipCard = (e) =>  {
     secondCard = card;
     hasFlippedCard = false;
     checkForMatch();
-
 };
 
-// let second = 0, minute = 0;
-// let interval;
-// const timer = document.querySelector(".timer");
 
-// const startTimer = () => {
-//     interval = setInterval(function(){
-//         timer.innerHTML = minute+ "mins " + second+ "secs";
-//         second++;
-//         if(second === 60){
-//             minute++;
-//             second = 0;
-//         }
-//         if(minute === 60){
-//             minute = 0;
-//         }
-//     },1000);
-// };
+const startTime = () => {
+    if (time) {
+        return;
+    }
+    time = setInterval(() => {
+        seconds++;
+        if(seconds === 60) {
+            minutes++;
+            seconds = 0;
+        }
+        timer.innerHTML = `${minutes} mins ${seconds} secs`;
+    }, 1000);
+};
+
+
+const stopTime = () =>	{
+    clearInterval (time);
+};
+
 
  const checkForMatch = () => {
     if (firstCard.value === secondCard.value) {
+        score += 1;
+        scoreContainer.innerHTML = `Score is ${score}`;
         removeFlipCards();
         flippedCards += 2;
         if(flippedCards === mixedCardArray.length) {
+            stopTime();
+
+            const user = JSON.parse(localStorage.getItem(keyUser));
+            user.score = score;
+            localStorage.setItem(keyUser, JSON.stringify(user));
+            addRecordTable();
           const container = document.getElementById('main_container');
           container.innerHTML = '';
             const div = document.createElement('div');
-            div.innerHTML = 'Congratulations!!! Your score is ';
+            div.innerHTML = `Congratulations!!! Your score is ${score} time is ${timer.innerText}`;
             container.appendChild(div);
         }
+    } else {
+        score -= 1;
+        scoreContainer.innerHTML = `Score is ${score}`;
+        unFlippedCards();
     }
-    unFlippedCards();
+
 };
 
 const unFlippedCards = () => {
@@ -150,6 +206,7 @@ const removeFlipCards = () => {
 };
 
 const createBoard = () => {
+    scoreContainer.innerHTML = `Score is ${score}`;
     mixedCardArray = [];
     if (getRadioValue() === 6) {
         mixedCardArray = shuffleCards(defaultCardArray6x6);
@@ -162,11 +219,8 @@ const createBoard = () => {
     if(document.getElementById('main_container')) {
         document.getElementById('main_container').remove();
     }
-
-
     const container = document.createElement("div");
     container.setAttribute('id', 'main_container');
-
 
     if (getRadioValue() === 6) {
         container.classList.add("big");
@@ -196,6 +250,8 @@ const createBoard = () => {
         document.getElementById('memory_board').appendChild(container);
 
         card.addEventListener('click', flipCard);
+        card.addEventListener('click', startTime);
+
 
     });
 };
