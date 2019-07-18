@@ -56,18 +56,24 @@ const logOut = () => {
 
 const addRecordTable = () => {
     const user = JSON.parse(localStorage.getItem(keyUser));
-    //const recordsTable = document.createElement("table");
 
     if(JSON.parse(localStorage.getItem(keyUsers)=== null)) {
-        let users = [user];
+        const users = [user];
        localStorage.setItem(keyUsers, JSON.stringify(users));
     } else {
-        const users = JSON.parse(localStorage.getItem(keyUsers));
+        let users = JSON.parse(localStorage.getItem(keyUsers));
+            if(users.length === 10) {
+            users.forEach(u => {
+                if(user.score > u.score) {
+                    users[0] = user;
+                }
+            });
+        }
         users.push(user);
         localStorage.setItem(keyUsers, JSON.stringify(users));
     }
     const users = JSON.parse(localStorage.getItem(keyUsers));
-    if(users.length) {
+    if(users.length > 1) {
        users.sort((a,b) => {
             return b.score - a.score;
         })
