@@ -104,18 +104,16 @@ const addRecordToTable = () => {
        localStorage.setItem(keyUsers, JSON.stringify(users));
     } else {
         let users = JSON.parse(localStorage.getItem(keyUsers));
-        if(users.length > 3) {
-            users.length = 3;
+            if (users.length < 3) {
+                users.push(user);
+            } else {
+               let min = Math.min.apply(null, users.map(item => item.score));
+               if(user.score > min) {
+                   users = users.filter(e => e.score!== min);
+                   users.push(user);
+               }
         }
 
-            if(users.length === 3) {
-            users.forEach(u => {
-                if(user.score > u.score) {
-                    users[0] = user;
-                }
-            });
-        }
-        users.push(user);
         localStorage.setItem(keyUsers, JSON.stringify(users));
     }
     //const users = JSON.parse(localStorage.getItem(keyUsers));
@@ -169,7 +167,7 @@ const flipCard = (e) =>  {
 
 const startTime = () => {
     if (time) {
-        return;
+        return
     }
     time = setInterval(() => {
         seconds++;
@@ -236,6 +234,9 @@ const removeFlipCards = () => {
 };
 
 const createBoard = () => {
+    if(score !== 0) {
+        score = 0;
+    }
     scoreContainer.innerHTML = `Score is ${score}`;
     mixedCardArray = [];
     if (getRadioValue() === 6) {
@@ -288,6 +289,7 @@ const createBoard = () => {
 
 
 const changeDifficulty = () => {
+
     const radioButtons = document.getElementsByName('difficulty');
     radioButtons.forEach(radioButton => {
 
