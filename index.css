@@ -15,8 +15,6 @@ body {
 }
 
 #board_container {
-    /*height: 100vh;*/
-    /*width: 60vw;*/
     margin: 0 auto;
 }
 
@@ -92,10 +90,9 @@ header {
     grid-template-columns: 1fr 5fr 1fr;
     justify-items: center;
     align-items: center;
-    height: 100px;
 }
 
-#log-out {
+#log-out, #record-table {
     background: #28d;
     border-color: transparent;
     color: #fff;
@@ -124,4 +121,10 @@ td, th {
 
 th {
     background: #b0e0e6;
+}
+
+.btns-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 5px;
 }

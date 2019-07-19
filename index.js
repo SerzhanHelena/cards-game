@@ -32,13 +32,13 @@ const defaultCardArray8x8 = [
     "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
     "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png"
 ];
+
 let mixedCardArray = [];
 let flippedCards = 0;
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 let score = 0;
-let records = [];
 const keyUsers = "Users";
 const keyUser = 'User';
 const timer = document.getElementById('timer');
@@ -47,39 +47,27 @@ let time = 0;
 let seconds = 0;
 let minutes = 0;
 
+
+const seeRecordsTable = () => {
+    const table = document.getElementById('records-table');
+    if(document.body.contains(table)) {
+        table.remove();
+    } else  {
+        createTableRecords();
+    }
+};
+
+const recordsBtn = document.getElementById('record-table');
+recordsBtn.addEventListener('click', seeRecordsTable);
+
 const logOut = () => {
-
-
     window.location = './form/form.html';
 };
 
-
-const addRecordTable = () => {
-    const user = JSON.parse(localStorage.getItem(keyUser));
-
-    if(JSON.parse(localStorage.getItem(keyUsers)=== null)) {
-        const users = [user];
-       localStorage.setItem(keyUsers, JSON.stringify(users));
-    } else {
-        let users = JSON.parse(localStorage.getItem(keyUsers));
-            if(users.length === 10) {
-            users.forEach(u => {
-                if(user.score > u.score) {
-                    users[0] = user;
-                }
-            });
-        }
-        users.push(user);
-        localStorage.setItem(keyUsers, JSON.stringify(users));
-    }
-    const users = JSON.parse(localStorage.getItem(keyUsers));
-    if(users.length > 1) {
-       users.sort((a,b) => {
-            return b.score - a.score;
-        })
-    }
+const createTableRecords = () => {
 
     let table = document.createElement('table');
+    table.setAttribute('id', 'records-table');
     let tr = document.createElement('tr');
     table.appendChild(tr);
     tr.appendChild(document.createElement('th'));
@@ -88,6 +76,12 @@ const addRecordTable = () => {
     table.rows[0].cells[1].innerHTML = 'Score';
 
     document.body.appendChild(table);
+    const users = JSON.parse(localStorage.getItem(keyUsers));
+    if(users.length > 1) {
+        users.sort((a,b) => {
+            return b.score - a.score;
+        })
+    }
     let i = 1;
 
     users.forEach(elem => {
@@ -99,6 +93,35 @@ const addRecordTable = () => {
         table.rows[i].cells[1].innerHTML = elem.score;
         i++;
     });
+
+};
+
+const addRecordToTable = () => {
+    const user = JSON.parse(localStorage.getItem(keyUser));
+
+    if(JSON.parse(localStorage.getItem(keyUsers)=== null)) {
+        const users = [user];
+       localStorage.setItem(keyUsers, JSON.stringify(users));
+    } else {
+        let users = JSON.parse(localStorage.getItem(keyUsers));
+        if(users.length > 3) {
+            users.length = 3;
+        }
+
+            if(users.length === 3) {
+            users.forEach(u => {
+                if(user.score > u.score) {
+                    users[0] = user;
+                }
+            });
+        }
+        users.push(user);
+        localStorage.setItem(keyUsers, JSON.stringify(users));
+    }
+    //const users = JSON.parse(localStorage.getItem(keyUsers));
+
+
+    createTableRecords();
 
 
 };
@@ -176,7 +199,8 @@ const stopTime = () =>	{
             const user = JSON.parse(localStorage.getItem(keyUser));
             user.score = score;
             localStorage.setItem(keyUser, JSON.stringify(user));
-            addRecordTable();
+            addRecordToTable();
+            
           const container = document.getElementById('main_container');
           container.innerHTML = '';
             const div = document.createElement('div');
