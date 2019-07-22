@@ -8,10 +8,9 @@
 <body>
 <header>
     <div>
-        <p>Please, choose difficulty</p>
-        <input type="radio" id="size4" name="difficulty" value="4" checked>4x4
-        <input type="radio" id="size6" name="difficulty" value="6">6x6
-        <input type="radio" id="size8" name="difficulty" value="8">8x8
+        <input type="radio" id="size4" class="radio-btn" name="difficulty" value="4" checked>4x4
+        <input type="radio" id="size6" class="radio-btn" name="difficulty" value="6">6x6
+        <input type="radio" id="size8" class="radio-btn" name="difficulty" value="8">8x8
     </div>
     <div>
         <div id="score">Score</div>
@@ -27,11 +26,12 @@
         <div id="memory_board"></div>
     </section>
     <div class="table-wrapper"></div>
+    <div id="toast"><div id="desc"></div></div>
 </main>
+<script src="additional.js"></script>
 <script src="createBoard.js"></script>
 <script src="flip.js"></script>
 <script src="timers.js"></script>
-<script src="additional.js"></script>
 <script src="index.js"></script>
 
 </body>

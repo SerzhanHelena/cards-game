@@ -2,7 +2,7 @@ let flippedCards = 0;
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
-
+const boardSize = getRadioValue();
 
 const flipCard = (e) =>  {
     if (lockBoard) return;
@@ -26,7 +26,7 @@ const checkForMatch = () => {
         scoreContainer.innerHTML = `Score is ${score}`;
         removeFlipCards();
         flippedCards += 2;
-        if(flippedCards === mixedCardArray.length) {
+        if(flippedCards === Math.pow(boardSize, 2)) {
             stopTime();
             const radioButtons = document.getElementsByName('difficulty');
             radioButtons.forEach(radioButton => {
@@ -36,12 +36,15 @@ const checkForMatch = () => {
             user.score = score;
             localStorage.setItem(keyUser, JSON.stringify(user));
             addRecordToTable();
-
-            const container = document.getElementById('main_container');
-            container.innerHTML = '';
-            const div = document.createElement('div');
-            div.innerHTML = `Congratulations!!! Your score is ${score} time is ${timer.innerText}`;
-            container.appendChild(div);
+            const toast = document.getElementById("toast");
+            const desc = document.getElementById('desc');
+            desc.innerHTML = `Congratulations!!! Your score is ${score}, time is ${timer.innerText}`;
+            toast.classList.add('show');
+            setTimeout(() => {
+                    toast.className = toast.className.replace("show", "");
+                },
+                5000);
+            seeRecordsTable();
         }
     } else {
         score -= 1;

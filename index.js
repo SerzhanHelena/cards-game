@@ -1,37 +1,20 @@
-const defaultCardArray = ["img/blue.jpg","img/blue.jpg","img/red.jpg",
-    "img/red.jpg","img/yellow.png","img/yellow.png", "img/green.jpg", "img/green.jpg", "img/pink.jpg","img/pink.jpg",
-    "img/grey.png", "img/grey.png","img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg"
-];
-
-const defaultCardArray6x6 = [
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-];
-
-const defaultCardArray8x8 = [
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png",
-    "img/orange.jpg", "img/orange.jpg", "img/purple.jpg", "img/purple.jpg",
-    "img/blue.jpg","img/blue.jpg","img/red.jpg","img/red.jpg",
-    "img/yellow.png","img/yellow.png","img/green.jpg", "img/green.jpg",
-    "img/pink.jpg","img/pink.jpg","img/grey.png", "img/grey.png"
+const colorsArray = [
+    '#CD5C5C', '#CD5C5C', '#DC143C', '#DC143C',
+    '#FF0000', '#FF0000', '#8B0000', '#8B0000',
+    '#FFC0CB', '#FFC0CB', '#FF69B4', '#FF69B4',
+    '#C71585', '#C71585', '#DB7093', '#DB7093',
+    '#FFA07A', '#FFA07A', '#FF8C00', '#FF8C00',
+    '#FFFF00', '#FFFF00', '#FFFACD', '#FFFACD',
+    '#F0E68C', '#F0E68C', '#D8BFD8', '#D8BFD8',
+    '#3CB371', '#3CB371', '#40E0D0', '#40E0D0',
+    '#9370DB', '#9370DB', '#9932CC', '#9932CC',
+    '#6A5ACD', '#6A5ACD', '#D2691E', '#D2691E',
+    '#000000', '#000000', '#C0C0C0', '#C0C0C0',
+    '#191970', '#191970', '#ADFF2F', '#ADFF2F',
+    '#FFFF00', '#FFFF00', '#0000FF', '#0000FF' ,
+    '#FF00FF', '#FF00FF', '#BC8F8F', '#BC8F8F',
+    '#B8860B', '#B8860B', '#A52A2A', '#A52A2A',
+    '#D2B48C', '#D2B48C', '#00FF7F', '#00FF7F'
 ];
 
 let score = 0;
@@ -40,13 +23,11 @@ const keyUser = 'User';
 const scoreContainer =  document.getElementById('score');
 
 const createTableRecords = () => {
-    let table = document.createElement('table');
-    let tableWrapper = document.querySelector('.table-wrapper');
-
-
+    const table = document.createElement('table');
     table.setAttribute('id', 'records-table');
+    const tableWrapper = document.querySelector('.table-wrapper');
 
-    let tr = document.createElement('tr');
+    const tr = document.createElement('tr');
     table.appendChild(tr);
     tr.appendChild(document.createElement('th'));
     tr.appendChild(document.createElement('th'));
@@ -76,11 +57,7 @@ const createTableRecords = () => {
 const seeRecordsTable = () => {
     const table = document.getElementById('records-table');
     document.querySelector('.table-wrapper').classList.add('show-modal');
-    if(document.body.contains(table)) {
-        table.remove();
-    } else  {
-        createTableRecords();
-    }
+    createTableRecords();
 };
 
 const windowOnClick = (e) => {
@@ -123,29 +100,15 @@ logOutBtn.addEventListener('click', logOut);
 const recordsBtn = document.getElementById('record-table');
 recordsBtn.addEventListener('click', seeRecordsTable);
 
-const changeDifficulty = () => {
-    const radioButtons = document.getElementsByName('difficulty');
-    radioButtons.forEach(radioButton => {
-        radioButton.addEventListener('change',e => {
-            if(parseInt(e.currentTarget.value) === 6) {
-                e.currentTarget.checked = true;
-                createBoard();
-            }
-            else if(parseInt(e.currentTarget.value) === 8) {
-                e.currentTarget.checked = true;
-                createBoard();
-            } else {
-                e.currentTarget.checked = true;
-                createBoard();
-            }
-        });
-    });
-
-};
-
+const radioButtons = document.querySelectorAll('.radio-btn');
+radioButtons.forEach(radioButton => radioButton.addEventListener('change', () => {
+        const boardContainer = document.getElementById('memory_board').innerHTML = '';
+        createBoard();
+}
+    ));
 
 createBoard();
-changeDifficulty();
+
 
 
 
