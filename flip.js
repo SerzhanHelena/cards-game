@@ -14,14 +14,16 @@ const flipCard = (e) =>  {
         hasFlippedCard = true;
         firstCard = card;
         return;
+    } else {
+        secondCard = card;
+        hasFlippedCard = false;
     }
-    secondCard = card;
-    hasFlippedCard = false;
+
     checkForMatch();
 };
 
 const checkForMatch = () => {
-    if (firstCard.value === secondCard.value) {
+    if (firstCard.value === secondCard.value && firstCard.id !== secondCard.id) {
         score += 1;
         scoreContainer.innerHTML = `Score is ${score}`;
         removeFlipCards();

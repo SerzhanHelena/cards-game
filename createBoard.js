@@ -23,12 +23,8 @@ const createBoard = () => {
 
             const card = document.createElement('div');
             card.classList.add('card');
-
-
             card.value = randomSlicedColorArr[boardSize * i + j];
-
-
-
+            card.id = boardSize * i + j;
             const backFace = document.createElement("div");
             backFace.classList.add('back-face');
 
