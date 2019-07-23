@@ -2,11 +2,14 @@ const createBoard = () => {
     if (score !== 0) {
         score = 0;
     }
+
     scoreContainer.innerHTML = `Score is ${score}`;
-    let mixedCardArray = shuffleCards(colorsArray);
     let boardSize = getRadioValue();
 
     const container = document.getElementById('memory_board');
+    const slicedColorsArr = colorsArray.slice(0, boardSize * boardSize);
+    const randomSlicedColorArr = shuffleCards(slicedColorsArr);
+
     for (let i = 0; i < boardSize; i++) {
         const row = document.createElement('div');
 
@@ -18,11 +21,13 @@ const createBoard = () => {
             cell.classList.add('cell');
             row.appendChild(cell);
 
-
             const card = document.createElement('div');
             card.classList.add('card');
-            card.value = mixedCardArray[Math.floor(Math.random() * boardSize)];
-            cell.appendChild(card);
+
+
+            card.value = randomSlicedColorArr[boardSize * i + j];
+
+
 
             const backFace = document.createElement("div");
             backFace.classList.add('back-face');
@@ -33,9 +38,16 @@ const createBoard = () => {
 
             card.appendChild(backFace);
             card.appendChild(frontFace);
-
+            cell.appendChild(card);
             card.addEventListener('click', flipCard);
             card.addEventListener('click', startTime);
         }
     }
 };
+
+// const getTwoEqualRandoms = (arr) => {
+//     let a;
+//     let b = arr[Math.floor(Math.random() * arr.length)];
+//     a = b;
+//     return [a, b];
+// };
