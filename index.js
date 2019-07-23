@@ -17,7 +17,10 @@ const colorsArray = [
     '#D2B48C', '#D2B48C', '#00FF7F', '#00FF7F'
 ];
 
+let card = new CardClass();
+card.createBoard();
 
+let table = new TableClass();
 
 const windowOnClick = (e) => {
     if (e.target === document.querySelector('.table-wrapper')) {
@@ -35,18 +38,17 @@ const logOutBtn = document.getElementById('log-out');
 logOutBtn.addEventListener('click', logOut);
 
 const recordsBtn = document.getElementById('record-table');
-recordsBtn.addEventListener('click', seeRecordsTable);
+recordsBtn.addEventListener('click', table.seeRecordsTable);
 
 const radioButtons = document.querySelectorAll('.radio-btn');
 radioButtons.forEach(radioButton => radioButton.addEventListener('change', () => {
         const boardContainer = document.getElementById('memory_board').innerHTML = '';
         timer.innerHTML = '';
         //time = 0;
-        createBoard();
+    card.createBoard();
     }
 ));
 
-createBoard();
 
 
 
