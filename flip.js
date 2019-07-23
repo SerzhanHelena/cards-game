@@ -2,6 +2,8 @@ let flippedCards = 0;
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
+const scoreContainer =  document.getElementById('score');
+let score = 0;
 const boardSize = getRadioValue();
 
 const flipCard = (e) =>  {

@@ -2,7 +2,11 @@ const createBoard = () => {
     if (score !== 0) {
         score = 0;
     }
-
+    if(time !== 0) {
+        time = 0;
+        seconds = 0;
+        minutes = 0;
+    }
     scoreContainer.innerHTML = `Score is ${score}`;
     let boardSize = getRadioValue();
 
@@ -40,10 +44,3 @@ const createBoard = () => {
         }
     }
 };
-
-// const getTwoEqualRandoms = (arr) => {
-//     let a;
-//     let b = arr[Math.floor(Math.random() * arr.length)];
-//     a = b;
-//     return [a, b];
-// };
