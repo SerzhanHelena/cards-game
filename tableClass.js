@@ -4,6 +4,10 @@ class TableClass {
         this.keyUser = 'User';
     }
 
+    static get table() {
+        return  document.getElementById('records-table');
+    }
+   
     createTableRecords() {
         const table = document.createElement('table');
         table.setAttribute('id', 'records-table');
@@ -36,9 +40,9 @@ class TableClass {
     };
 
     seeRecordsTable() {
-        const table = document.getElementById('records-table');
+        TableClass.table;
         document.querySelector('.table-wrapper').classList.add('show-modal');
-        this.createTableRecords;
+        this.createTableRecords();
     };
 
     addRecordToTable() {
@@ -60,6 +64,6 @@ class TableClass {
             }
             localStorage.setItem(this.keyUsers, JSON.stringify(users));
         }
-        this.createTableRecords;
+        this.createTableRecords();
     };
 }

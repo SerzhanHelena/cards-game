@@ -1,134 +1,184 @@
-let timer = new TimerClass();
+const timer = new TimerClass(0, 0, 0);
 
 class CardClass {
-constructor () {
+  constructor() {
     this.flippedCards = 0;
     this.hasFlippedCard = false;
     this.lockBoard = false;
     this.firstCard;
     this.secondCard;
-    this.scoreContainer =  document.getElementById('score');
+    this.scoreContainer = document.getElementById("score");
     this.score = 0;
     this.boardSize = getRadioValue();
-}
-    createBoard () {
-        if (this.score !== 0) {
-            this.score = 0;
-        }
-        if(timer.time !== 0) {
-            timer.time = 0;
-            timer.seconds = 0;
-            timer.minutes = 0;
-        }
-        this.scoreContainer.innerHTML = `Score is ${this.score}`;
-        this.boardSize = getRadioValue();
+  }
+  createBoard() {
+    if (this.score !== 0) {
+      this.score = 0;
+    }
+    if (timer.time !== 0) {
+      timer.time = 0;
+      timer.seconds = 0;
+      timer.minutes = 0;
+    }
+    this.scoreContainer.innerHTML = `Score is ${this.score}`;
+    this.boardSize = getRadioValue();
 
-        const container = document.getElementById('memory_board');
-        const slicedColorsArr = colorsArray.slice(0, this.boardSize * this.boardSize);
-        const randomSlicedColorArr = shuffleCards(slicedColorsArr);
+    const container = document.getElementById("memory_board");
+    const slicedColorsArr = colorsArray.slice(
+      0,
+      this.boardSize * this.boardSize
+    );
+    const randomSlicedColorArr = shuffleCards(slicedColorsArr);
 
-        for (let i = 0; i < this.boardSize; i++) {
-            const row = document.createElement('div');
+    for (let i = 0; i < this.boardSize; i++) {
+      const row = document.createElement("div");
 
-            row.classList.add('row');
-            container.appendChild(row);
+      row.classList.add("row");
+      container.appendChild(row);
 
-            for (let j = 0; j < this.boardSize; j++) {
-                const cell = document.createElement('div');
-                cell.classList.add('cell');
-                row.appendChild(cell);
+      for (let j = 0; j < this.boardSize; j++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        row.appendChild(cell);
 
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.value = randomSlicedColorArr[this.boardSize * i + j];
-                card.id = this.boardSize * i + j;
-                const backFace = document.createElement("div");
-                backFace.classList.add('back-face');
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.value = randomSlicedColorArr[this.boardSize * i + j];
+        card.id = this.boardSize * i + j;
+        const backFace = document.createElement("div");
+        backFace.classList.add("back-face");
 
-                const frontFace = document.createElement("div");
-                frontFace.style.background = card.value;
-                frontFace.classList.add('front-face');
+        const frontFace = document.createElement("div");
+        frontFace.style.background = card.value;
+        frontFace.classList.add("front-face");
 
-                card.appendChild(backFace);
-                card.appendChild(frontFace);
-                cell.appendChild(card);
-                card.addEventListener('click', this.flipCard);
-                card.addEventListener('click', timer.startTime);
-            }
-        }
-    };
-    flipCard(e) {
-        if (this.lockBoard) return;
+        card.appendChild(backFace);
+        card.appendChild(frontFace);
+        cell.appendChild(card);
+        card.addEventListener("click", this.flipCard.bind(this));
+        card.addEventListener("click", timer.startTime.bind(timer));
+      }
+    }
+  }
 
-        const card = e.currentTarget;
-        card.classList.add('flip');
+  flipCard(e) {
+    if (this.lockBoard) return;
 
-        if (!this.hasFlippedCard) {
-            this.hasFlippedCard = true;
-            this.firstCard = card;
-            return;
-        } else {
-            this.secondCard = card;
-            this.hasFlippedCard = false;
-        }
+    const card = e.currentTarget;
+    card.classList.add("flip");
 
-        this.checkForMatch();
-    };
+    if (!this.hasFlippedCard) {
+      this.hasFlippedCard = true;
+      this.firstCard = card;
+      return;
+    }
+    this.secondCard = card;
+    this.hasFlippedCard = false;
 
-   checkForMatch() {
-        if (this.firstCard.value === this.secondCard.value && this.firstCard.id !== this.secondCard.id) {
-            this.score += 1;
-            this.scoreContainer.innerHTML = `Score is ${this.score}`;
-            this.removeFlipCards();
-            this.flippedCards += 2;
-            if(this.flippedCards === Math.pow(this.boardSize, 2)) {
-                timer.stopTime();
-                const radioButtons = document.getElementsByName('difficulty');
-                radioButtons.forEach(radioButton => {
-                    radioButton.checked = false;
-                });
-                const user = JSON.parse(localStorage.getItem(table.keyUser));
-                user.score = this.score;
-                localStorage.setItem(table.keyUser, JSON.stringify(user));
-                table.addRecordToTable();
-                const toast = document.getElementById("toast");
-                const desc = document.getElementById('desc');
-                desc.innerHTML = `Congratulations!!! Your score is ${this.score}, time is ${timer.timer.innerText}`;
-                toast.classList.add('show');
-                setTimeout(() => {
-                        toast.className = toast.className.replace("show", "");
-                    },
-                    5000);
-                table.seeRecordsTable();
-            }
-        } else {
-            this.score -= 1;
-            this.scoreContainer.innerHTML = `Score is ${this.score}`;
-            this.unFlippedCards();
-        }
+    this.checkForMatch();
+  }
 
-    };
+  checkForMatch() {
+    if (
+      this.firstCard.value === this.secondCard.value &&
+      this.firstCard.id !== this.secondCard.id
+    ) {
+      this.score += 1;
+      this.scoreContainer.innerHTML = `Score is ${this.score}`;
+      this.removeFlipCards();
+      this.flippedCards += 2;
+      if (this.flippedCards === Math.pow(this.boardSize, 2)) {
+        timer.stopTime();
+        const radioButtons = document.getElementsByName("difficulty");
+        radioButtons.forEach(radioButton => {
+          radioButton.checked = false;
+        });
+        const user = JSON.parse(localStorage.getItem(table.keyUser));
+        user.score = this.score;
+        localStorage.setItem(table.keyUser, JSON.stringify(user));
 
-    unFlippedCards() {
-        this.lockBoard = true;
+        table.addRecordToTable();
+
+        const toast = document.getElementById("toast");
+        const desc = document.getElementById("desc");
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        let particles = [];
+
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.id = "firework-canvas";
+        canvas.width = width;
+        canvas.height = height;
+        canvas.style.display = "block";
+        canvas.style.pointerEvents = "none";
+        canvas.style.position = "fixed";
+        canvas.style.zIndex = "1";
+        canvas.style.left = "0";
+        canvas.style.top = "0";
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.opacity = ".85";
+        document.body.appendChild(canvas);
+
+        const create = () => {
+          if (particles.length > 2) return;
+          particles.push(new FireworkClass(context, width, height, 50));
+          setTimeout(create, 6000);
+        };
+
+        const loop = () => {
+          requestAnimationFrame(loop);
+          context.fillStyle = "rgba(0,0,0,0.2)";
+          context.fillRect(0, 0, width, height);
+
+          for (let p of particles) {
+            if (p.complete()) p.reset();
+            p.update(width, height);
+            p.draw();
+          }
+        };
+        create();
+        loop();
+
+        desc.innerHTML = `Congratulations!!! Your score is ${
+          this.score
+        }, time is ${timer.minutes} : ${timer.seconds} `;
+        toast.classList.add("show");
         setTimeout(() => {
-            this.firstCard.classList.remove('flip');
-            this.secondCard.classList.remove('flip');
-            this.lockBoard = false;
-            this.resetBoard();
-        }, 1500);
-    };
+          toast.className = toast.className.replace("show", "");
+        }, 5000);
 
-    resetBoard() {
-        [this.hasFlippedCard, this.lockBoard] = [false, false];
-        [this.firstCard, this.secondCard] = [null, null];
-    };
+        setTimeout(() => {
+          let canvas = document.getElementById("firework-canvas");
+          document.body.removeChild(canvas);
+          table.seeRecordsTable();
+        }, 5000);
+      }
+    } else {
+      this.score -= 1;
+      this.scoreContainer.innerHTML = `Score is ${this.score}`;
+      this.unFlippedCards();
+    }
+  }
 
-    removeFlipCards() {
-        this.firstCard.classList.add('hidden');
-        this.secondCard.classList.add('hidden');
-    };
+  unFlippedCards() {
+    this.lockBoard = true;
+    setTimeout(() => {
+      this.firstCard.classList.remove("flip");
+      this.secondCard.classList.remove("flip");
+      this.lockBoard = false;
+      this.resetBoard();
+    }, 1500);
+  }
 
+  resetBoard() {
+    [this.hasFlippedCard, this.lockBoard] = [false, false];
+    [this.firstCard, this.secondCard] = [null, null];
+  }
+
+  removeFlipCards() {
+    this.firstCard.classList.add("hidden");
+    this.secondCard.classList.add("hidden");
+  }
 }
-
-

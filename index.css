@@ -7,20 +7,25 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    background: #919ab1;
+    
 }
 
 .card.flip {
     transform: rotateY(180deg);
 }
 
+
+
 #memory_board {
-    background-color: cornsilk;
-    border: #999 1px solid;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     padding: 24px;
     margin: 20px auto;
     display: flex;
     flex-wrap: wrap;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    border-radius: 52px;
+    width: min-content;
 }
 
 .card {
@@ -55,11 +60,18 @@ body {
 }
 
 header {
-    background: #ebebeb;
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
     justify-items: center;
     align-items: center;
+   
+}
+
+.score-time-values {
+    font-size: 25px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 25px;
 }
 
 #log-out, #record-table {
@@ -76,7 +88,7 @@ header {
     background: #17c;
 }
 
-#log-out:focus {
+#log-out:focus, #record-table:focus {
     border-color: #05a;
 }
 
@@ -123,7 +135,7 @@ th {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     opacity: 0;
-   visibility: hidden;
+    visibility: hidden;
     transform: scale(1.1);
 }
 
@@ -151,10 +163,10 @@ th {
     text-align: center;
     border-radius: 2px;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     left: 0;
     right: 0;
-    bottom: 10%;
+    bottom: 80%;
     font-size: 17px;
     white-space: nowrap;
 }

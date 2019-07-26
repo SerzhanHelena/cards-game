@@ -1,10 +1,14 @@
 class TimerClass {
-    constructor() {
-        this.timer = document.getElementById('timer');
-        this.time = 0;
-        this.seconds = 0;
-        this.minutes = 0;
+    
+    constructor(time, minutes, seconds) {
+        this.time = time;
+        this.minutes = minutes;
+        this.seconds = seconds;  
     }
+
+    static get divTimer() {
+        return  document.getElementById('timer');
+      }
 
     startTime() {
         if (this.time) {
@@ -16,11 +20,11 @@ class TimerClass {
                 this.minutes++;
                 this.seconds = 0;
             }
-            //this.timer.innerHTML = `${this.minutes} mins ${this.seconds} secs`;
+            TimerClass.divTimer.innerHTML = `${this.minutes} : ${this.seconds}`;
         }, 1000);
     };
 
-    stopTime(){
+    stopTime() {
         clearInterval(this.time);
     };
 
