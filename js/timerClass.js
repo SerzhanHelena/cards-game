@@ -20,7 +20,7 @@ class TimerClass {
                 this.minutes++;
                 this.seconds = 0;
             }
-            TimerClass.divTimer.innerHTML = `${this.minutes} : ${this.seconds}`;
+            TimerClass.divTimer.innerHTML = `${this.minutes} minutes ${this.seconds} seconds`;
         }, 1000);
     };
 

@@ -124,7 +124,8 @@ th {
 .hidden {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s 2s,opacity 2s linear;
+    /* transition: visibility 0s 2s,opacity 2s linear; */
+    transition: visibility 0s 0.5s,opacity 0.5s cubic-bezier(0.71, 0.43, 0, 1.35);
 }
 
 .table-wrapper {
@@ -185,13 +186,13 @@ th {
 }
 
 @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
 }
 
 @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+    from {top: 0; opacity: 0;}
+    to {top: 30px; opacity: 1;}
 }
 
 @-webkit-keyframes expand {
@@ -223,11 +224,49 @@ th {
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 60px; opacity: 0;}
+    from {top: 30px; opacity: 1;}
+    to {top: 60px; opacity: 0;}
 }
 
 @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 60px; opacity: 0;}
+    from {top: 30px; opacity: 1;}
+    to {top: 60px; opacity: 0;}
+}
+
+.radio-btn {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+    background-color: #f1f1f1;
+    color: #666;
+    top: 10px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 7px;
+    outline: none;
+}
+
+.radio-btn:checked::before {
+    position: absolute;
+    left: 7px;
+    top: 4px;
+    content: '\02143';
+    transform: rotate(40deg);
+}
+
+.radio-btn:hover {
+     background-color: #f7f7f7;
+}
+
+.radio-btn:checked {
+     background-color: #f1f1f1;
+}
+
+label {
+     color: #333;
+     cursor: pointer;
+     position: relative;
+     top: 6px;
 }
