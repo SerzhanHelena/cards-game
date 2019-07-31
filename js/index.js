@@ -43,7 +43,10 @@ recordsBtn.addEventListener('click', table.seeRecordsTable.bind(table));
 const radioButtons = document.querySelectorAll('.radio-btn');
 radioButtons.forEach(radioButton => radioButton.addEventListener('change', () => {
         const boardContainer = document.getElementById('memory_board').innerHTML = '';
-        timer.innerHTML = '';
+        if(timer.time) {
+            timer.stopTime();
+            document.getElementById('timer').innerHTML = '';
+        }
     card.createBoard();
     }
 ));

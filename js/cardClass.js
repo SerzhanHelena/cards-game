@@ -88,7 +88,7 @@ class CardClass {
       this.scoreContainer.innerHTML = `Score is ${this.score}`;
       this.removeFlipCards();
       this.flippedCards += 2;
-      if (this.flippedCards === Math.pow(this.boardSize, 2)) {
+      if (this.flippedCards === Math.pow(this.boardSize, 2) || this.flippedCards === this.boardSize * this.boardSize - 2) {
         timer.stopTime();
         const radioButtons = document.getElementsByName("difficulty");
         radioButtons.forEach(radioButton => {
